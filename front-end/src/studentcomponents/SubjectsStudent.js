@@ -3,14 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import studentService from '../services/studentService';
 
 const SubjectsStudent = () => {
-    const { studentId } = useParams();
+    const {userId, studentId } = useParams();
     const [subjects, setSubjects] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
-                const data = await studentService.getSubjects(studentId);
+                const data = await studentService.getSubjects(userId, studentId);
                 setSubjects(data);
             } catch (error) {
                 console.error('Failed to load subjects', error);
@@ -18,7 +18,7 @@ const SubjectsStudent = () => {
         };
 
         fetchSubjects();
-    }, [studentId]);
+    }, [userId, studentId]);
 
     return (
         <div>
@@ -27,7 +27,7 @@ const SubjectsStudent = () => {
                 subjects.map((subject) => (
                     <div key={subject.id}>
                         <h4>{subject.name}</h4>
-                        <button onClick={() => navigate(`/student/${studentId}/subject/${subject.id}/lessons`)}>
+                        <button onClick={() => navigate(`${subject.id}/lessons`)}>
                             Show Lessons
                         </button>
                     </div>
@@ -35,6 +35,9 @@ const SubjectsStudent = () => {
             ) : (
                 <p>No subjects found.</p>
             )}
+            <button onClick={() => navigate(-1)}>
+                Back
+            </button>
         </div>
     );
 };

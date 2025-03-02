@@ -3,13 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const QuestionAdd = () => {
-    const { lecturerId, lessonId } = useParams();
+    const {userId, lecturerId, lessonId } = useParams();
     const [newQuestion, setNewQuestion] = useState({ question: '', variant1: '', variant2: '', variant3: '', correctAnswer: '' });
     const navigate = useNavigate();
 
     const handleAdd = async () => {
         try {
-            lecturerService.addQuestions(lecturerId, lessonId, newQuestion);
+            lecturerService.addQuestions(userId, lecturerId, lessonId, newQuestion);
             alert('Question added successfully!');
             navigate(-1);
         } catch (error) {

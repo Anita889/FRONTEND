@@ -6,14 +6,14 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const nav = useNavigate();
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
             const data = await authService.signUp(email, password);
             setMessage(`User ${data.user.email} registered successfully`);
-            nav(-1);
+            navigate('/');
         } catch (error) {
             setMessage(error.response.data.message);
         }

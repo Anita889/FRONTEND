@@ -12,13 +12,14 @@ const Login = () => {
             const data = await authService.login(email, password);
             localStorage.setItem('userRole', data.role);
             localStorage.setItem('studentId', data.user.id);
+            localStorage.setItem('userId', data.user.userId);
 
             if (data.role === 'STUDENT') {
-                navigate(`/students/${data.user.id}`);
+                navigate(`user/${data.user.userId}/student/${data.user.id}`);
             } else if (data.role === 'LECTURER') {
-                navigate(`/lecturers/${data.user.id}`);
+                navigate(`user/${data.user.userId}/lecturers/${data.user.id}`);
             } else if (data.role === 'ADMIN') {
-                navigate(`/admin/${data.user.id}`);
+                navigate(`user/${data.user.userId}/admins/${data.user.id}`);
             }
         } catch (error) {
             console.error('Login failed:', error.response?.data?.message || error.message);

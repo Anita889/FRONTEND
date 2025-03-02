@@ -3,7 +3,7 @@ import { useParams , useNavigate} from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const QuestionsLecturer = () => {
-    const {lecturerId, lessonId} = useParams();
+    const {userId, lecturerId, lessonId} = useParams();
     const [questions, setQuestions] = useState([]);
     const navigate = useNavigate();
     // const [answers, setAnswers] = useState({});
@@ -12,7 +12,7 @@ const QuestionsLecturer = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const data = await lecturerService.getQuestions(lecturerId, lessonId);
+                const data = await lecturerService.getQuestions(userId, lecturerId, lessonId);
                 setQuestions(data); // Assuming data matches QuestionVariantsStudentDTO
             } catch (error) {
                 console.error('Failed to load questions', error);
@@ -20,12 +20,12 @@ const QuestionsLecturer = () => {
         };
 
         fetchQuestions();
-    }, [lecturerId, lessonId]);
+    }, [userId, lecturerId, lessonId]);
 
     return (
         <div>
             <h2>Questions</h2>
-            <button onClick={() => navigate(`/lecturers/${lecturerId}/lesson/${lessonId}/questions/add`)}>
+            <button onClick={() => navigate(`questions/add`)}>
                 Add Question
             </button>
             {questions.length > 0 ? (
@@ -36,10 +36,10 @@ const QuestionsLecturer = () => {
                         <p>Variant 2: {question.variant2}</p>
                         <p>Variant 3: {question.variant3}</p>
                         <p>Correct Variant: {question.correctAnswer}</p>
-                        <button onClick={() => navigate(`/lecturers/${lecturerId}/questions/${question.id}/update`)}>
+                        <button onClick={() => navigate(`questions/${question.id}/update`)}>
                             update question
                         </button>
-                        <button onClick={() => navigate(`/lecturers/${lecturerId}/questions/${question.id}/remove`)}>
+                        <button onClick={() => navigate(`questions/${question.id}/remove`)}>
                             delete question
                         </button>
                     </div>

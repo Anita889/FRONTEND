@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const QuestionUpdate = () => {
-    const { lecturerId, questionId } = useParams();
+    const {userId, lecturerId, questionId } = useParams();
     const [question, setQuestion] = useState({
         id: '',
         question: '',
@@ -18,7 +18,7 @@ const QuestionUpdate = () => {
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const data = await lecturerService.getQuestion(lecturerId, questionId);
+                const data = await lecturerService.getQuestion(userId, lecturerId, questionId);
                 if (data) {
                     setQuestion({
                         question: data.question || '',
@@ -38,11 +38,11 @@ const QuestionUpdate = () => {
         };
 
         fetchQuestion();
-    }, [lecturerId, questionId]);
+    }, [userId, lecturerId, questionId]);
 
     const handleUpdate = async () => {
         try {
-            lecturerService.updateQuestion(lecturerId, questionId, question);
+            lecturerService.updateQuestion(userId, lecturerId, questionId, question);
             alert('Question updated successfully!');
             navigate(-1);
         } catch (error) {

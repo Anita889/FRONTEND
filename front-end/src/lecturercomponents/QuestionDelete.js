@@ -3,14 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const QuestionDelete = () => {
-    const { lecturerId, questionId  } = useParams();
+    const {userId, lecturerId, questionId  } = useParams();
     const [question, setQuestion] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const data = await lecturerService.getQuestion(lecturerId, questionId);
+                const data = await lecturerService.getQuestion(userId, lecturerId, questionId);
                 setQuestion(data);
             } catch (error) {
                 console.error('Failed to load question', error);
@@ -18,12 +18,12 @@ const QuestionDelete = () => {
         };
 
         fetchQuestion();
-    }, [lecturerId, questionId]);
+    }, [userId, lecturerId, questionId]);
 
     const handleDelete = async () => {
         try {
             //${API_URL}${lecturerId}/questions/${questionId}/remove
-            lecturerService.deleteQuestion(lecturerId, questionId);
+            lecturerService.deleteQuestion(userId, lecturerId, questionId);
             alert('Question deleted successfully!');
             navigate(-1); // Redirect to questions list
         } catch (error) {

@@ -1,22 +1,22 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/students/';  // Change the URL to match your backend endpoint
+const API_URL = 'http://localhost:8080/api/user/';  // Change the URL to match your backend endpoint
 
 const studentService = {
-    getStudent: (studentId) => {
-        return axios.get(`${API_URL}${studentId}`).then((response) => response.data.user);
+    getStudent: (userId, studentId) => {
+        return axios.get(`${API_URL}${userId}/student/${studentId}`).then((response) => response.data);
     },
-    getSubjects: (studentId) => {
-        return axios.get(`${API_URL}${studentId}/subjects`).then((response) => response.data);
+    getSubjects: (userId, studentId) => {
+        return axios.get(`${API_URL}${userId}/student/${studentId}/subjects`).then((response) => response.data);
     },
-    getLessonsOfSubject: (studentId, subjectId) => {
-        return axios.get(`${API_URL}${studentId}/subjects/${subjectId}`).then((response) => response.data);
+    getLessonsOfSubject: (userId, studentId, subjectId) => {
+        return axios.get(`${API_URL}${userId}/student/${studentId}/subjects/${subjectId}`).then((response) => response.data);
     },
-    getQuestionsAndVariants: (studentId, lessonId) => {
-        return axios.get(`${API_URL}${studentId}/lesson/${lessonId}`).then((response) => response.data);
+    getQuestionsAndVariants: (userId, studentId, lessonId) => {
+        return axios.get(`${API_URL}${userId}/student/${studentId}/lesson/${lessonId}`).then((response) => response.data);
     },
-    submitAnswers: (studentId, lessonId, answers) => {
-        return axios.post(`${API_URL}${studentId}/lesson/${lessonId}`, answers).then((response) => response.data);
+    submitAnswers: (userId, studentId, lessonId, answers) => {
+        return axios.post(`${API_URL}${userId}/student/${studentId}/lesson/${lessonId}`, answers).then((response) => response.data);
     }
 };
 

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import studentService from '../services/studentService';
 
 const Student = () => {
-    const { studentId } = useParams();
+    const {userId, studentId } = useParams();
     const [student, setStudent] = useState(null);
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null); // State to track errors
@@ -16,7 +16,7 @@ const Student = () => {
             try {
                 setLoading(true); // Start loading
                 setError(null); // Reset error before fetch
-                const data = await studentService.getStudent(studentId);
+                const data = await studentService.getStudent(userId, studentId);
                 setStudent(data); // Update student data
             } catch (error) {
                 console.error('Failed to load student data', error);
@@ -27,7 +27,7 @@ const Student = () => {
         };
 
         fetchStudent();
-    }, [studentId]);
+    }, [userId, studentId]);
 
     return (
         <div>
@@ -51,7 +51,7 @@ const Student = () => {
             )}
 
             {/* Button to navigate to Subjects Page */}
-            <button onClick={() => navigate(`/student/${studentId}/subjects`)}>Show Subjects</button>
+            <button onClick={() => navigate(`subjects`)}>Show Subjects</button>
         </div>
     );
 };

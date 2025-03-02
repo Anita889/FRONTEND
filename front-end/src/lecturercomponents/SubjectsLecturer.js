@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const SubjectsLecturer = () => {
-    const { lecturerId } = useParams();
+    const {userId, lecturerId } = useParams();
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const SubjectsLecturer = () => {
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
-                const data = await lecturerService.getSubjects(lecturerId);
+                const data = await lecturerService.getSubjects(userId, lecturerId);
                 setSubjects(data);
             } catch (error) {
                 setError('Failed to load subjects');
@@ -23,7 +23,7 @@ const SubjectsLecturer = () => {
         };
 
         fetchSubjects();
-    }, [lecturerId]);
+    }, [userId, lecturerId]);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -37,7 +37,7 @@ const SubjectsLecturer = () => {
                 subjects.map((subject) => (
                     <div key={subject.id}>
                         <h4>{subject.name}</h4>
-                        <button onClick={() => navigate(`/lecturers/${lecturerId}/subjects/${subject.id}`)}>
+                        <button onClick={() => navigate(`${subject.id}`)}>
                             Show Lessons
                         </button>
                     </div>

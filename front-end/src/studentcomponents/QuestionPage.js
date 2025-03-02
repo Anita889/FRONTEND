@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import studentService from '../services/studentService';
 
 const QuestionsPage = () => {
-    const { studentId, lessonId } = useParams();
+    const {userId, studentId, lessonId } = useParams();
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const data = await studentService.getQuestionsAndVariants(studentId, lessonId);
+                const data = await studentService.getQuestionsAndVariants(userId, studentId, lessonId);
                 setQuestions(data); // Assuming data matches QuestionVariantsStudentDTO
             } catch (error) {
                 console.error('Failed to load questions', error);
@@ -19,7 +20,7 @@ const QuestionsPage = () => {
         };
 
         fetchQuestions();
-    }, [studentId, lessonId]);
+    }, [userId, studentId, lessonId]);
 
     const handleAnswerChange = (questionId, selectedVariant) => {
         setAnswers((prev) => ({
@@ -51,7 +52,7 @@ const QuestionsPage = () => {
 
             console.log('Formatted Answers:', formattedAnswers); // Log to check the structure of the answers
 
-            const gradeData = await studentService.submitAnswers(studentId, lessonId, formattedAnswers);
+            const gradeData = await studentService.submitAnswers(userId, studentId, lessonId, formattedAnswers);
             setMessage(`Grade: ${gradeData.grade}, Description: ${gradeData.description}`);
         } catch (error) {
             console.error('Failed to submit answers', error);
@@ -94,9 +95,12 @@ const QuestionsPage = () => {
             )}
 
             <button onClick={handleSubmitAnswers}>Submit Answers</button>
-
             {message && <p>{message}</p>}
+            <button onClick={() => navigate(-1)}>
+            Back
+        </button>
         </div>
+
     );
 };
 
