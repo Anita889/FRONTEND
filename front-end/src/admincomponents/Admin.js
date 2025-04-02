@@ -1,88 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import adminService from '../services/adminService';
 
-const Admin = ({ adminId }) => {
+const Admin = () => {
+    const { userId, adminId } = useParams();
     const [admin, setAdmin] = useState(null);
-    const [faculties, setFaculties] = useState([]);
-    const [departments, setDepartments] = useState([]);
-    const [lecturers, setLecturers] = useState([]);
-    const [studentGroups, setStudentGroups] = useState([]);
-    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true); // State to track loading status
+    const [error, setError] = useState(null); // State to track errors
+    const navigate = useNavigate();
 
     useEffect(() => {
+        if (!adminId) return;
+
         const fetchAdmin = async () => {
             try {
-                const data = await adminService.getAdmin(adminId);
-                setAdmin(data); } catch (error) {
-                setMessage(error.response.data.message);
+                setLoading(true); // Start loading
+                setError(null); // Reset error before fetch
+                const data = await adminService.getAdmin(userId, adminId);
+                setAdmin(data); // Update student data
+            } catch (error) {
+                console.error('Failed to load admin data', error);
+                setError('Failed to load admin data. Please try again later.'); // Set error message
+            } finally {
+                setLoading(false); // Stop loading when done
             }
         };
+
         fetchAdmin();
-    }, [adminId]);
-
-    const fetchFaculties = async () => {
-        try {
-            const data = await adminService.getFaculties(adminId);
-            setFaculties(data);
-        } catch (error) {
-            setMessage(error.response.data.message);
-        }
-    };
-
-    const fetchDepartments = async (facultyId) => {
-        try {
-            const data = await adminService.getDepartments(adminId, facultyId);  setDepartments(data);
-        } catch (error) {
-            setMessage(error.response.data.message);
-        }
-    };
-
-    const fetchLecturers = async (facultyId, departmentId) => {
-        try {
-            const data = await adminService.getLecturers(adminId, facultyId, departmentId);
-            setLecturers(data);
-        } catch (error) {
-            setMessage(error.response.data.message);
-        }
-    };
-
-    const fetchStudentGroups = async (facultyId, departmentId) => {
-        try {
-            const data = await adminService.getStudentGroups(adminId, facultyId, departmentId);
-            setStudentGroups(data);} catch (error) {
-            setMessage(error.response.data.message);
-        }
-    };
+    }, [userId, adminId]);
 
     return (
         <div>
             <h2>Admin Information</h2>
-            {admin && <div>{admin.name}</div>}
-            <button onClick={fetchFaculties}>Get Faculties</button>
-            {faculties.map(faculty => (
-                <div key={faculty.id}>
-                    <h3>{faculty.name}</h3>
-                    <button onClick={() => fetchDepartments(faculty.id)}>Get Departments</button>
-                </div>
-            ))}
-            {departments.map(department => (
-                <div key={department.id}>
-                    <h4>{department.name}</h4>
-                    <button onClick={() => fetchLecturers(department.facultyId, department.id)}>Get Lecturers</button>
-                    <button onClick={() => fetchStudentGroups(department.facultyId, department.id)}>Get Student Groups</button>
-                </div>
-            ))}
-            {lecturers.map(lecturer => (
-                <div key={lecturer.id}>
-                    <p>{lecturer.name}</p>
-                </div>
-            ))}
-            {studentGroups.map(group => (
-                <div key={group.id}>
-                    <p>{group.name}</p>
-                </div>
-            ))}
-            {message && <p>{message}</p>}
+
+            {loading ? (
+                <p>Loading lecturer data...</p>
+            ) : error ? (
+                <p>{error}</p>
+            ) : (
+                admin && (
+                    <div>
+                        <p><strong>Name:</strong> {admin.name} {admin.surName}</p>
+                        <p><strong>Email:</strong> {admin.email}</p>
+                    </div>
+                )
+            )}
+
+            {/* Button to navigate to Subjects Page */}
+            <button onClick={() => navigate(`faculties`)}>Show Faculties</button>
         </div>
     );
 };

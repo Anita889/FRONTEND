@@ -17,6 +17,9 @@ const studentService = {
     },
     submitAnswers: (userId, studentId, lessonId, answers) => {
         return axios.post(`${API_URL}${userId}/student/${studentId}/lesson/${lessonId}`, answers).then((response) => response.data);
+    },
+    updateStudent(userId, studentId, student) {
+        return axios.put(`${API_URL}${userId}/student/${studentId}/update`, student).then((response) => response.data);
     }
 };
 

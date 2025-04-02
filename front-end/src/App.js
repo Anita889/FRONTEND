@@ -20,6 +20,19 @@ import LecturersAdd from "./admincomponents/LecturersAdd";
 import LecturersRemove from "./admincomponents/LecturersRemove";
 import LecturersUpdate from "./admincomponents/LecturersUpdate";
 import Student from "./studentcomponents/Student";
+import StudentGroups from "./admincomponents/StudentGroups";
+// import Students from "./admincomponents/Students";
+import StudentGroupsAdd from "./admincomponents/StudentGroupsAdd";
+import StudentGroupUpdate from "./admincomponents/StudentGroupUpdate";
+import Students from "./admincomponents/Students";
+import StudentGroupRemove from "./admincomponents/StudentGroupRemove";
+import StudentUpdate from "./admincomponents/StudentUpdate";
+import StudentRemove from "./admincomponents/StudentRemove";
+import StudentAdd from "./admincomponents/StudentAdd";
+import LessonAdd from "./admincomponents/LessonAdd";
+import StudentGroupsCalculate from "./admincomponents/StudentGroupsCalculate";
+import StudentGroupsDepartmentCalculate from "./admincomponents/StudentGroupsDepartmentCalculate";
+import AffectionsStudentsGroupLecturer from "./lecturercomponents/AffectionsStudentsGroupLecturer";
 
 
 const App = () => {
@@ -38,6 +51,7 @@ const App = () => {
                 <Route path="user/:userId/lecturers/:lecturerId/subjects" element={<SubjectsLecturer />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId" element={<LessonsLecturer />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId" element={<QuestionsLecturer />} />
+                <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/affection" element={<AffectionsStudentsGroupLecturer />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/questions/:questionId/remove" element={<QuestionDelete />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/questions/:questionId/update" element={<QuestionUpdate />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/questions/add" element={<QuestionAdd />} />
@@ -50,6 +64,23 @@ const App = () => {
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/lecturers/add" element={<LecturersAdd />} />
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/lecturers/:lecturerId/remove" element={<LecturersRemove />} />
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/lecturers/:lecturerId/update" element={<LecturersUpdate />} />
+
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups" element={<StudentGroups />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/add" element={<StudentGroupsAdd />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups" element={<StudentGroupsDepartmentCalculate />}/>
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/remove" element={<StudentGroupRemove />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/update" element={<StudentGroupUpdate />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId" element={<StudentGroups />}/>
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/calculate" element={<StudentGroupsCalculate />}/>
+
+
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/getStudents" element={<Students />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/getStudents/:studentId" element={<Student />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/getStudents/add" element={<StudentAdd />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/getStudents/:studentId/remove" element={<StudentRemove />} />
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/getStudents/:studentId/update" element={<StudentUpdate />} />
+
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/lecturers/addLesson" element={<LessonAdd />} />
             </Routes>
         </Router>
     );

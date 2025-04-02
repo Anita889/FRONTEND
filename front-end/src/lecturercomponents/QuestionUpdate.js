@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const QuestionUpdate = () => {
-    const {userId, lecturerId, questionId } = useParams();
+    const { userId, lecturerId, questionId } = useParams();
     const [question, setQuestion] = useState({
         id: '',
         question: '',
@@ -61,10 +61,62 @@ const QuestionUpdate = () => {
         return <div>Loading...</div>;
     }
 
+    // Inline styles
+    const containerStyle = {
+        maxWidth: '600px',
+        margin: '20px auto',
+        padding: '20px',
+        backgroundColor: '#f9f9f9',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    };
+
+    const headingStyle = {
+        textAlign: 'center',
+        color: '#333',
+        fontSize: '24px',
+        marginBottom: '20px',
+    };
+
+    const inputStyle = {
+        padding: '10px',
+        border: '1px solid #ddd',
+        borderRadius: '4px',
+        fontSize: '16px',
+        width: '100%',
+        marginBottom: '15px',
+    };
+
+    const buttonStyle = {
+        padding: '10px 20px',
+        borderRadius: '5px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        border: 'none',
+        margin: '5px',
+    };
+
+    const submitBtnStyle = {
+        ...buttonStyle,
+        backgroundColor: '#4CAF50',
+        color: 'white',
+    };
+
+    const cancelBtnStyle = {
+        ...buttonStyle,
+        backgroundColor: '#f44336',
+        color: 'white',
+    };
+
+    const formStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+    };
+
     return (
-        <div>
-            <h2>Update Question</h2>
-            <form onSubmit={e => { e.preventDefault(); handleUpdate(); }}>
+        <div style={containerStyle}>
+            <h2 style={headingStyle}>Update Question</h2>
+            <form onSubmit={e => { e.preventDefault(); handleUpdate(); }} style={formStyle}>
                 <div>
                     <label>Question:</label>
                     <input
@@ -72,6 +124,7 @@ const QuestionUpdate = () => {
                         name="question"
                         value={question.question}
                         onChange={handleChange}
+                        style={inputStyle}
                     />
                 </div>
                 <div>
@@ -81,6 +134,7 @@ const QuestionUpdate = () => {
                         name="variant1"
                         value={question.variant1}
                         onChange={handleChange}
+                        style={inputStyle}
                     />
                 </div>
                 <div>
@@ -90,6 +144,7 @@ const QuestionUpdate = () => {
                         name="variant2"
                         value={question.variant2}
                         onChange={handleChange}
+                        style={inputStyle}
                     />
                 </div>
                 <div>
@@ -99,6 +154,7 @@ const QuestionUpdate = () => {
                         name="variant3"
                         value={question.variant3}
                         onChange={handleChange}
+                        style={inputStyle}
                     />
                 </div>
                 <div>
@@ -108,11 +164,14 @@ const QuestionUpdate = () => {
                         name="correctAnswer"
                         value={question.correctAnswer}
                         onChange={handleChange}
+                        style={inputStyle}
                     />
                 </div>
-                <button type="submit">Update Question</button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <button type="submit" style={submitBtnStyle}>Update Question</button>
+                    <button type="button" onClick={() => navigate(-1)} style={cancelBtnStyle}>Cancel</button>
+                </div>
             </form>
-            <button onClick={() => navigate(-1)}>Cancel</button>
         </div>
     );
 };

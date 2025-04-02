@@ -28,6 +28,31 @@ const Student = () => {
 
         fetchStudent();
     }, [userId, studentId]);
+    const handleUpdateStudent = async (e) => {
+        e.preventDefault();
+        setError(null);
+
+        try {
+            const updatedStudent = { ...student };
+            if (updatedStudent.studentBirthDate) {
+                updatedStudent.studentBirthDate = new Date(updatedStudent.studentBirthDate).toISOString().split('T')[0];
+            }
+            await studentService.updateStudent(userId, studentId, updatedStudent);
+            navigate(-1);
+        } catch (error) {
+            console.error('Update failed', error);
+            setError('Failed to update student. Please try again later.'); // Handle error
+        }
+    };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
+            setStudent(prev => ({
+                ...prev,
+                [name]: name === 'mog' || name === 'academyGroup' ? parseFloat(value) || null : value
+            }));
+
+    };
 
     return (
         <div>
@@ -39,14 +64,20 @@ const Student = () => {
                 <p>{error}</p>
             ) : (
                 student && (
-                    <div>
-                        <p><strong>Name:</strong> {student.studentName} {student.studentSurname}</p>
-                        <p><strong>Email:</strong> {student.email}</p>
-                        <p><strong>City:</strong> {student.studentCity}</p>
-                        <p><strong>Academy Group ID:</strong> {student.academyGroupId}</p>
-                        <p><strong>Date of Birth:</strong> {student.studentBirthDate}</p>
-                        <p><strong>MOG:</strong> {student.mog}</p>
-                    </div>
+                    <form onSubmit={handleUpdateStudent}>
+                        <input type="text" name="studentName" value={student.studentName} onChange={handleInputChange} placeholder="First Name" required />
+                        <input type="text" name="studentSurname" value={student.studentSurname} onChange={handleInputChange} placeholder="Surname" required />
+                        <input type="date" name="studentBirthDate" value={student.studentBirthDate} onChange={handleInputChange} required />
+                        <input type="number" name="mog" value={student.mog || ''} onChange={handleInputChange} placeholder="MOG" step="0.01" required />
+                        <input type="text" name="studentCity" value={student.studentCity} onChange={handleInputChange} placeholder="City" required />
+                        <input type="email" name="email" value={student.email} onChange={handleInputChange} placeholder="Email" required />
+                        <p>Student Group: {student.studentGroupDTO?.name}</p>
+
+                        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
+
+                        <button type="submit">Update Student</button>
+                    </form>
+
                 )
             )}
 

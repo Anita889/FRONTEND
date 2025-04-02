@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import lecturerService from '../services/lecturerService';
 
 const SubjectsLecturer = () => {
-    const {userId, lecturerId } = useParams();
+    const { userId, lecturerId } = useParams();
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -25,25 +25,81 @@ const SubjectsLecturer = () => {
         fetchSubjects();
     }, [userId, lecturerId]);
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
     return (
-        <div>
-            <h2>Subjects</h2>
-            {error && <p>{error}</p>}
-            {subjects.length > 0 ? (
-                subjects.map((subject) => (
-                    <div key={subject.id}>
-                        <h4>{subject.name}</h4>
-                        <button onClick={() => navigate(`${subject.id}`)}>
-                            Show Lessons
-                        </button>
-                    </div>
-                ))
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            color: 'white'
+        }}>
+            <h2 style={{
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
+                textShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+                marginBottom: '20px'
+            }}>
+                📚 Subjects
+            </h2>
+
+            {loading ? (
+                <p style={{ fontSize: '1.2rem', color: '#ffeb3b' }}>Loading subjects...</p>
+            ) : error ? (
+                <p style={{ fontSize: '1.2rem', color: '#ff5722' }}>{error}</p>
+            ) : subjects.length > 0 ? (
+                <div style={{
+                    width: '90%',
+                    maxWidth: '800px',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '20px'
+                }}>
+                    {subjects.map((subject) => (
+                        <div key={subject.id} style={{
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            padding: '20px',
+                            borderRadius: '12px',
+                            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                            backdropFilter: 'blur(10px)',
+                            textAlign: 'center',
+                            transition: 'transform 0.3s ease-in-out'
+                        }}>
+                            <h4 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 'bold',
+                                color: '#ffffff'
+                            }}>
+                                {subject.name}
+                            </h4>
+                            <button
+                                style={{
+                                    marginTop: '10px',
+                                    padding: '12px 20px',
+                                    fontSize: '1rem',
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    background: '#4CAF50',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    transition: 'background 0.3s ease-in-out, transform 0.2s'
+                                }}
+                                onClick={() => navigate(`${subject.id}`)}
+                                onMouseOver={(e) => e.target.style.background = '#45a049'}
+                                onMouseOut={(e) => e.target.style.background = '#4CAF50'}
+                            >
+                                Show Lessons
+                            </button>
+                        </div>
+                    ))}
+                </div>
             ) : (
-                <p>No subjects found.</p>
+                <p style={{ fontSize: '1.2rem', color: 'white', textAlign: 'center', marginTop: '20px' }}>
+                    No subjects found.
+                </p>
             )}
         </div>
     );

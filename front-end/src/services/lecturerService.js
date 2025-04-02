@@ -26,6 +26,9 @@ const lecturerService = {
     },
     updateQuestion: (userId, lecturerId, questionId, question) => {
         return axios.put(`${API_URL}${userId}/lecturers/${lecturerId}/questions/${questionId}/update`, question).then((response) => response);
+    },
+    getAffectionsOfLesson(userId, lecturerId, subjectId, lessonId) {
+        return axios.get(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/lesson/${lessonId}/affection`).then((response) => response.data);
     }
 };
 
