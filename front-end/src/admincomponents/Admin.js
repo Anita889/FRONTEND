@@ -29,25 +29,80 @@ const Admin = () => {
         fetchAdmin();
     }, [userId, adminId]);
 
+    // Inline CSS for styling
+    const styles = {
+        container: {
+            backgroundColor: '#f4f4f9',
+            borderRadius: '8px',
+            padding: '20px',
+            maxWidth: '500px',
+            margin: '20px auto',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        },
+        heading: {
+            textAlign: 'center',
+            color: '#2c3e50',
+            fontSize: '1.8rem',
+            marginBottom: '20px',
+        },
+        adminDetails: {
+            fontSize: '1.1rem',
+            margin: '10px 0',
+        },
+        strong: {
+            color: '#2980b9',
+        },
+        loadingError: {
+            textAlign: 'center',
+            fontSize: '1.2rem',
+            color: '#e74c3c',
+            fontWeight: 'bold',
+        },
+        loading: {
+            color: '#f39c12',
+        },
+        button: {
+            backgroundColor: '#3498db',
+            color: 'white',
+            border: 'none',
+            padding: '10px 20px',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            width: '100%',
+            marginTop: '20px',
+            borderRadius: '5px',
+            transition: 'background-color 0.3s ease',
+        },
+        buttonHover: {
+            backgroundColor: '#2980b9',
+        },
+    };
+
     return (
-        <div>
-            <h2>Admin Information</h2>
+        <div style={styles.container}>
+            <h2 style={styles.heading}>Admin Information</h2>
 
             {loading ? (
-                <p>Loading lecturer data...</p>
+                <div style={{ ...styles.loadingError, ...styles.loading }}>Loading admin data...</div>
             ) : error ? (
-                <p>{error}</p>
+                <div style={styles.loadingError}>{error}</div>
             ) : (
                 admin && (
                     <div>
-                        <p><strong>Name:</strong> {admin.name} {admin.surName}</p>
-                        <p><strong>Email:</strong> {admin.email}</p>
+                        <p style={styles.adminDetails}><strong style={styles.strong}>Name:</strong> {admin.name} {admin.surName}</p>
+                        <p style={styles.adminDetails}><strong style={styles.strong}>Email:</strong> {admin.email}</p>
                     </div>
                 )
             )}
 
-            {/* Button to navigate to Subjects Page */}
-            <button onClick={() => navigate(`faculties`)}>Show Faculties</button>
+            <button
+                style={styles.button}
+                onClick={() => navigate(`faculties`)}
+                onMouseOver={(e) => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+                onMouseOut={(e) => e.target.style.backgroundColor = styles.button.backgroundColor}
+            >
+                Show Institutions
+            </button>
         </div>
     );
 };

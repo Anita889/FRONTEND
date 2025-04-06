@@ -67,7 +67,7 @@ const App = () => {
 
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups" element={<StudentGroups />} />
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/add" element={<StudentGroupsAdd />} />
-                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups" element={<StudentGroupsDepartmentCalculate />}/>
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/calculate" element={<StudentGroupsDepartmentCalculate />}/>
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/remove" element={<StudentGroupRemove />} />
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/update" element={<StudentGroupUpdate />} />
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId" element={<StudentGroups />}/>

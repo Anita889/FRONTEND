@@ -40,7 +40,7 @@ const adminService = {
         return axios.put(`${API_URL}${userId}/admins/${adminId}/faculties/${facultyId}/departments/${departmentId}/studentGroups/${studentGroupId}/calculate`).then((response) => response.data);
     },
     calculateDepartment: (userId, adminId, facultyId, departmentId) => {
-        return axios.put(`${API_URL}${userId}/admins/${adminId}/faculties/${facultyId}/departments/${departmentId}/studentGroups`).then((response) => response.data);
+        return axios.put(`${API_URL}${userId}/admins/${adminId}/faculties/${facultyId}/departments/${departmentId}/studentGroups/calculate`).then((response) => response.data);
     },
     getStudents(userId, adminId, facultyId, departmentId, studentGroupId) {
         return axios.get(`${API_URL}${userId}/admins/${adminId}/faculties/${facultyId}/departments/${departmentId}/studentGroups/${studentGroupId}/getStudents`).then((response) => response.data);

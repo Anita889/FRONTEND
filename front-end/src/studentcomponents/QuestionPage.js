@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import studentService from '../services/studentService';
 
 const QuestionsPage = () => {
-    const {userId, studentId, lessonId } = useParams();
+    const { userId, studentId, lessonId } = useParams();
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
     const [message, setMessage] = useState('');
@@ -60,17 +60,91 @@ const QuestionsPage = () => {
         }
     };
 
+    const pageStyles = {
+        fontFamily: 'Arial, sans-serif',
+        margin: '20px',
+        backgroundColor: '#f4f7f6',
+        borderRadius: '8px',
+        padding: '20px',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+    };
+
+    const titleStyles = {
+        color: '#4CAF50',
+        fontSize: '28px',
+        textAlign: 'center',
+        marginBottom: '20px',
+    };
+
+    const questionCardStyles = {
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        padding: '15px',
+        marginBottom: '15px',
+        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    };
+
+    const questionTextStyles = {
+        fontSize: '18px',
+        marginBottom: '10px',
+    };
+
+    const variantsContainerStyles = {
+        marginBottom: '15px',
+    };
+
+    const variantOptionStyles = {
+        margin: '5px 0',
+    };
+
+    const radioButtonStyles = {
+        marginRight: '10px',
+    };
+
+    const selectedAnswerStyles = {
+        fontWeight: 'bold',
+        color: '#00796B',
+    };
+
+    const buttonStyles = {
+        padding: '10px 20px',
+        margin: '10px',
+        fontSize: '16px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease',
+    };
+
+    const submitButtonStyles = {
+        ...buttonStyles,
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        border: 'none',
+    };
+
+    const backButtonStyles = {
+        ...buttonStyles,
+        backgroundColor: '#FF9800',
+        color: 'white',
+        border: 'none',
+    };
+
+    const messageStyles = {
+        color: '#d32f2f',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    };
+
     return (
-        <div>
-            <h2>Questions</h2>
+        <div style={pageStyles}>
+            <h2 style={titleStyles}>Answer the Questions</h2>
             {questions.length > 0 ? (
                 questions.map((question) => (
-                    <div key={question.id}>
-                        <p><strong>{question.question}</strong></p>
-                        <div>
-                            {/* Render radio buttons for variants */}
+                    <div key={question.id} style={questionCardStyles}>
+                        <p style={questionTextStyles}><strong>{question.question}</strong></p>
+                        <div style={variantsContainerStyles}>
                             {[question.variant1, question.variant2, question.variant3].map((variant, index) => (
-                                <div key={index}>
+                                <div key={index} style={variantOptionStyles}>
                                     <label>
                                         <input
                                             type="radio"
@@ -78,6 +152,7 @@ const QuestionsPage = () => {
                                             value={variant}
                                             onChange={() => handleAnswerChange(question.id, variant)}
                                             checked={answers[question.id] === variant}
+                                            style={radioButtonStyles}
                                         />
                                         {variant}
                                     </label>
@@ -86,7 +161,7 @@ const QuestionsPage = () => {
                         </div>
                         {/* Display the selected variant */}
                         {answers[question.id] && (
-                            <p><strong>You selected:</strong> {answers[question.id]}</p>
+                            <p style={selectedAnswerStyles}><strong>You selected:</strong> {answers[question.id]}</p>
                         )}
                     </div>
                 ))
@@ -94,13 +169,10 @@ const QuestionsPage = () => {
                 <p>Loading questions...</p>
             )}
 
-            <button onClick={handleSubmitAnswers}>Submit Answers</button>
-            {message && <p>{message}</p>}
-            <button onClick={() => navigate(-1)}>
-            Back
-        </button>
+            <button style={submitButtonStyles} onClick={handleSubmitAnswers}>Submit Answers</button>
+            {message && <p style={messageStyles}>{message}</p>}
+            <button style={backButtonStyles} onClick={() => navigate(-1)}>Back</button>
         </div>
-
     );
 };
 
