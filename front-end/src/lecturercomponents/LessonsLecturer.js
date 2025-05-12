@@ -105,6 +105,24 @@ const LessonsLecturer = () => {
                                 >
                                     View Questions Affection
                                 </button>
+                                <button
+                                    style={{
+                                        fontSize: '1rem',
+                                        fontWeight: 'bold',
+                                        padding: '10px 15px',
+                                        border: 'none',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        background: '#2256ff',
+                                        color: 'white',
+                                        transition: 'background 0.3s ease-in-out, transform 0.2s'
+                                    }}
+                                    onClick={() => navigate(`lesson/${lesson.id}/isPresent`)}
+                                    onMouseOver={(e) => e.target.style.background = '#e64a19'}
+                                    onMouseOut={(e) => e.target.style.background = '#ff5722'}
+                                >
+                                    Put presence
+                                </button>
                             </div>
                         </div>
                     ))

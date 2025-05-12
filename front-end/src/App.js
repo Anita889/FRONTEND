@@ -33,6 +33,10 @@ import LessonAdd from "./admincomponents/LessonAdd";
 import StudentGroupsCalculate from "./admincomponents/StudentGroupsCalculate";
 import StudentGroupsDepartmentCalculate from "./admincomponents/StudentGroupsDepartmentCalculate";
 import AffectionsStudentsGroupLecturer from "./lecturercomponents/AffectionsStudentsGroupLecturer";
+import StudentGroupsForExam from "./lecturercomponents/StudentGroupsExam";
+import StudentGroupsAffectionSubject from "./lecturercomponents/StudentGroupsAffectionSubject";
+import StudentGroupsIsPresent from "./lecturercomponents/StudentGroupsIsPresent";
+import StudentGroupAnalysis from "./admincomponents/StudentGroupAnalysis";
 
 
 const App = () => {
@@ -55,6 +59,10 @@ const App = () => {
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/questions/:questionId/remove" element={<QuestionDelete />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/questions/:questionId/update" element={<QuestionUpdate />} />
                 <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/questions/add" element={<QuestionAdd />} />
+                <Route path="user/:userId/lecturer/:lecturerId/subjects/:subjectId/studentGroups" element={<StudentGroupsForExam />} />
+                <Route path="user/:userId/lecturer/:lecturerId/subjects/:subjectId/affection" element={<StudentGroupsAffectionSubject />} />
+                <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/studentGroups" element={<StudentGroupsIsPresent />} />
+                <Route path="user/:userId/lecturers/:lecturerId/subjects/:subjectId/lesson/:lessonId/isPresent" element={<StudentGroupsIsPresent />} />
 
                 <Route path="user/:userId/admins/:adminId" element={<Admin />} />
                 <Route path="user/:userId/admins/:adminId/faculties" element={<Faculties />} />
@@ -72,6 +80,7 @@ const App = () => {
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/update" element={<StudentGroupUpdate />} />
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId" element={<StudentGroups />}/>
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/calculate" element={<StudentGroupsCalculate />}/>
+                <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/analyze" element={<StudentGroupAnalysis />}/>
 
 
                 <Route path="user/:userId/admins/:adminId/faculties/:facultyId/departments/:departmentId/studentGroups/:studentGroupId/getStudents" element={<Students />} />

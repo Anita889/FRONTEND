@@ -7,6 +7,10 @@ const Lecturer = () => {
     const [lecturer, setLecturer] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [updating, setUpdating] = useState(false);
+    const [updateMessage, setUpdateMessage] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,6 +22,7 @@ const Lecturer = () => {
                 setError(null);
                 const data = await lecturerService.getLecturer(userId, lecturerId);
                 setLecturer(data);
+                setEmail(data.email); // initialize email
             } catch (error) {
                 console.error('Failed to load lecturer data', error);
                 setError('Failed to load lecturer data. Please try again later.');
@@ -28,6 +33,25 @@ const Lecturer = () => {
 
         fetchLecturer();
     }, [userId, lecturerId]);
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            setUpdating(true);
+            setUpdateMessage(null);
+            const updatedLecturer = {
+                email: lecturer.email,
+                password: lecturer.password // assuming password is stored in state
+            };
+            await lecturerService.updateLecturer(userId, lecturerId, lecturer);
+            setUpdateMessage('Lecturer information updated successfully!');
+        } catch (err) {
+            console.error('Update failed', err);
+            setUpdateMessage('Failed to update lecturer. Please try again.');
+        } finally {
+            setUpdating(false);
+        }
+    };
 
     return (
         <div style={{
@@ -55,21 +79,60 @@ const Lecturer = () => {
                 <p style={{ fontSize: '1.2rem', color: '#ff5722' }}>{error}</p>
             ) : (
                 lecturer && (
-                    <div style={{
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        padding: '20px',
-                        borderRadius: '12px',
-                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-                        backdropFilter: 'blur(10px)',
-                        textAlign: 'center'
-                    }}>
-                        <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                            {lecturer.name} {lecturer.surName}
-                        </p>
-                        <p style={{ fontSize: '1.2rem' }}>
-                            📧 <strong>Email:</strong> {lecturer.email}
-                        </p>
-                    </div>
+                    <>
+                        <div style={{
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            padding: '20px',
+                            borderRadius: '12px',
+                            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                            backdropFilter: 'blur(10px)',
+                            textAlign: 'center',
+                            marginBottom: '20px'
+                        }}>
+                            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+                                {lecturer.name} {lecturer.surName}
+                            </p>
+                            <p style={{ fontSize: '1.2rem' }}>
+                                📧 <strong>Email:</strong> {lecturer.email}
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', width: '300px', gap: '10px' }}>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Update Email"
+                                required
+                                style={{ padding: '10px', borderRadius: '6px', border: 'none' }}
+                            />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Update Password"
+                                style={{ padding: '10px', borderRadius: '6px', border: 'none' }}
+                            />
+                            <button
+                                type="submit"
+                                disabled={updating}
+                                style={{
+                                    padding: '10px',
+                                    background: '#4caf50',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    borderRadius: '6px',
+                                    border: 'none',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {updating ? 'Updating...' : 'Update Info'}
+                            </button>
+                            {updateMessage && (
+                                <p style={{ color: updateMessage.includes('successfully') ? '#c8e6c9' : '#ffcdd2' }}>{updateMessage}</p>
+                            )}
+                        </form>
+                    </>
                 )
             )}
 

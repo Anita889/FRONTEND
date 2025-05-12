@@ -95,6 +95,14 @@ const Faculties = () => {
                         >
                             Show Student Groups
                         </button>
+                        <button
+                            style={styles.button}
+                            onClick={() => navigate(`${department.id}/studentGroups/analyze`)}
+                            onMouseOver={(e) => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+                            onMouseOut={(e) => e.target.style.backgroundColor = styles.button.backgroundColor}
+                        >
+                            Show Student Groups Analyze Data
+                        </button>
                     </div>
                 ))
             ) : (

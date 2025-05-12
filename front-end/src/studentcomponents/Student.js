@@ -8,6 +8,11 @@ const Student = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false); // 👈 NEW
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
 
     useEffect(() => {
         if (!studentId) return;
@@ -34,10 +39,10 @@ const Student = () => {
         setError(null);
 
         try {
-            const updatedStudent = { ...student };
-            if (updatedStudent.studentBirthDate) {
-                updatedStudent.studentBirthDate = new Date(updatedStudent.studentBirthDate).toISOString().split('T')[0];
-            }
+            const updatedStudent = {
+                email: student.email,
+                password: student.password // assuming password is stored in state
+            };
             await studentService.updateStudent(userId, studentId, updatedStudent);
             navigate(-1);
         } catch (error) {
@@ -50,7 +55,7 @@ const Student = () => {
         const { name, value } = e.target;
         setStudent(prev => ({
             ...prev,
-            [name]: name === 'mog' || name === 'academyGroup' ? parseFloat(value) || null : value
+            [name]: value
         }));
     };
 
@@ -65,48 +70,65 @@ const Student = () => {
             ) : (
                 student && (
                     <form onSubmit={handleUpdateStudent} className="space-y-4">
-                        <input type="text" name="studentName" value={student.studentName} onChange={handleInputChange}
-                               placeholder="First Name"
-                               className="w-full px-4 py-2 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                               required />
+                        <input type="text" name="studentName" value={student.studentName || ''}
+                               placeholder="text"
+                               className="w-full px-4 py-2 border border-purple-300 rounded-lg bg-gray-100" />
 
-                        <input type="text" name="studentSurname" value={student.studentSurname} onChange={handleInputChange}
-                               placeholder="Surname"
-                               className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                               required />
+                        <input type="text" name="studentSurname" value={student.studentSurname || ''}
+                               placeholder="text"
+                               className="w-full px-4 py-2 border border-pink-300 rounded-lg bg-gray-100" />
 
-                        <input type="date" name="studentBirthDate" value={student.studentBirthDate} onChange={handleInputChange}
-                               className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                               required />
+                        <input type="date" name="studentBirthDate" value={student.studentBirthDate || ''}
+                               placeholder="text"
+                               className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-gray-100" />
 
-                        <input type="number" name="mog" value={student.mog} onChange={handleInputChange}
-                               placeholder="MOG" step="0.01"
-                               className="w-full px-4 py-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                               required />
+                        <input type="number" name="mog" value={student.mog || ''}
+                               placeholder="text"
+                               className="w-full px-4 py-2 border border-green-300 rounded-lg bg-gray-100" />
 
-                        <input type="text" name="studentCity" value={student.studentCity} onChange={handleInputChange}
-                               placeholder="City"
-                               className="w-full px-4 py-2 border border-yellow-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                               required />
+                        <input type="text" name="studentCity" value={student.studentCity || ''}
+                               placeholder="city"
+                               className="w-full px-4 py-2 border border-yellow-300 rounded-lg bg-gray-100" />
 
-                        <input type="email" name="email" value={student.email} onChange={handleInputChange}
-                               placeholder="Email"
+                        <input type="text" name="studentgroup" value={student.studentGroupDTO?.name || ''}
+                               placeholder="text"
                                className="w-full px-4 py-2 border border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                required />
 
-                        <p className="text-lg font-medium text-gray-800">
-                            Student Group: <span className="text-purple-600">{student.studentGroupDTO?.name}</span>
-                        </p>
+                        <input type="email" name="email" value={student.email || ''} onChange={handleInputChange}
+                               placeholder="Email"
+                               className="w-full px-4 py-2 border border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                               required />
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={student.password || ''}
+                            onChange={handleInputChange}
+                            placeholder="Password"
+                            className="w-full px-4 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                            required
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className="mt-2 text-sm text-blue-250 hover:underline"
+                        >
+                            {showPassword ? "Hide Password" : "Show Password"}
+                        </button>
 
                         {error && <p className="text-red-600">{error}</p>}
 
+                        <button type="submit"
+                                className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+                            💾 Save Changes
+                        </button>
                     </form>
+
                 )
             )}
-
             <button
                 onClick={() => navigate(`subjects`)}
-                className="mt-6 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white py-2 rounded-lg hover:from-pink-600 hover:to-yellow-600 transition">
+                className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
                 📚 Show Subjects
             </button>
         </div>

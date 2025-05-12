@@ -93,6 +93,45 @@ const SubjectsLecturer = () => {
                             >
                                 Show Lessons
                             </button>
+                            <button
+                                style={{
+                                    marginTop: '10px',
+                                    padding: '12px 20px',
+                                    fontSize: '1rem',
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    background: '#4CAF50',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    transition: 'background 0.3s ease-in-out, transform 0.2s'
+                                }}
+                                onClick={() => navigate(`/user/${userId}/lecturer/${lecturerId}/subjects/${subject.id}/studentGroups`)}
+                                onMouseOver={(e) => e.target.style.background = '#45a049'}
+                                onMouseOut={(e) => e.target.style.background = '#4CAF50'}
+                            >
+                                Set Exam Points
+                            </button>
+                            <button
+                                style={{
+                                    marginTop: '10px',
+                                    padding: '12px 20px',
+                                    fontSize: '1rem',
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    background: '#4c59af',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    transition: 'background 0.3s ease-in-out, transform 0.2s'
+                                }}
+                                onClick={() => navigate(`/user/${userId}/lecturer/${lecturerId}/subjects/${subject.id}/affection`)}
+                                onMouseOver={(e) => e.target.style.background = '#45a049'}
+                                onMouseOut={(e) => e.target.style.background = '#4CAF50'}
+                            >
+                                View Analyze
+                            </button>
+
                         </div>
                     ))}
                 </div>

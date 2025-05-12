@@ -71,6 +71,9 @@ const adminService = {
     },
     addLesson(userId, adminId, facultyId, departmentId, lesson) {
         return axios.post(`${API_URL}${userId}/admins/${adminId}/faculties/${facultyId}/departments/${departmentId}/lecturers/addLesson`, lesson).then((response) => response.data);
+    },
+     analyzeStudentGroups (userId, adminId, facultyId, departmentId)  {
+        return axios.get(`${API_URL}${userId}/admins/${adminId}/faculties/${facultyId}/departments/${departmentId}/studentGroups/analyze`).then(res => res.data);
     }
 };
 

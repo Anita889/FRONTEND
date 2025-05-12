@@ -6,9 +6,11 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(null);
 
     const handleLogin = async () => {
         try {
+            setLoginError(null); // Clear previous error
             const data = await authService.login(email, password);
             localStorage.setItem('userRole', data.role);
             localStorage.setItem('studentId', data.user.id);
@@ -23,10 +25,10 @@ const Login = () => {
             }
         } catch (error) {
             console.error('Login failed:', error.response?.data?.message || error.message);
+            setLoginError('Login failed. Please check your email and password.');
         }
     };
 
-    // Inline Styles
     const containerStyle = {
         maxWidth: '400px',
         margin: '50px auto',
@@ -73,6 +75,12 @@ const Login = () => {
         color: 'white',
     };
 
+    const errorStyle = {
+        color: 'red',
+        marginTop: '10px',
+        textAlign: 'center',
+    };
+
     return (
         <div style={containerStyle}>
             <h2 style={headingStyle}>Login</h2>
@@ -96,6 +104,7 @@ const Login = () => {
             <button onClick={() => navigate('/signup')} style={signupBtnStyle}>
                 Sign Up
             </button>
+            {loginError && <p style={errorStyle}>{loginError}</p>}
         </div>
     );
 };

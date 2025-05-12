@@ -29,6 +29,35 @@ const lecturerService = {
     },
     getAffectionsOfLesson(userId, lecturerId, subjectId, lessonId) {
         return axios.get(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/lesson/${lessonId}/affection`).then((response) => response.data);
+    },
+    updateLecturer(userId, lecturerId, lecturer) {
+        return axios.put(`${API_URL}${userId}/lecturers/${lecturerId}`, lecturer).then((response) => response.data);
+    },
+    getStudentGroupsForExam(userId, lecturerId, subjectId) {
+        return axios.get(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/studentGroups`, {
+            params: { userId, lecturerId }
+        }).then(res => res.data)
+    },
+
+    updateExamPoints(userId, lecturerId, subjectId, data) {
+        return axios.put(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/studentGroups`, data, {
+            params: {userId, lecturerId}
+        })
+    },
+    viewAffectionOnSubject(userId, lecturerId, subjectId) {
+        return axios.get(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/affection`).then((response) => response.data);
+    },
+
+    putPresence(userId, lecturerId, subjectId, lessonId, payload) {
+        return axios.put(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/lesson/${lessonId}/isPresent`, payload, {
+            params: { userId, lecturerId, subjectId, lessonId }
+        }).then((response) => response.data);
+    },
+    getStudentGroupsForPresence(userId, lecturerId, subjectId, lessonId) {
+        return axios.get(`${API_URL}${userId}/lecturers/${lecturerId}/subjects/${subjectId}/lesson/${lessonId}/studentGroups`, {
+            params: { userId, lecturerId, subjectId, lessonId }
+        }).then((response) => response.data);
+
     }
 };
 

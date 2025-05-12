@@ -24,3 +24,16 @@ const studentService = {
 };
 
 export default studentService;
+
+
+//
+// const studentService = {
+//     getStudent: (userId, studentId) => axiosInstance.get(`${userId}/student/${studentId}`).then(r => r.data),
+//     getSubjects: (userId, studentId) => axiosInstance.get(`${userId}/student/${studentId}/subjects`).then(r => r.data),
+//     getLessonsOfSubject: (userId, studentId, subjectId) => axiosInstance.get(`${userId}/student/${studentId}/subjects/${subjectId}`).then(r => r.data),
+//     getQuestionsAndVariants: (userId, studentId, lessonId) => axiosInstance.get(`${userId}/student/${studentId}/lesson/${lessonId}`).then(r => r.data),
+//     submitAnswers: (userId, studentId, lessonId, answers) => axiosInstance.post(`${userId}/student/${studentId}/lesson/${lessonId}`, answers).then(r => r.data),
+//     updateStudent: (userId, studentId, student) => axiosInstance.put(`${userId}/student/${studentId}/update`, student).then(r => r.data)
+// };
+//
+// export default studentService;

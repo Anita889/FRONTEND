@@ -8,6 +8,7 @@ const QuestionsPage = () => {
     const [answers, setAnswers] = useState({});
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const [isSatisfied, setIsSatisfied] = useState(false);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -159,16 +160,28 @@ const QuestionsPage = () => {
                                 </div>
                             ))}
                         </div>
+
                         {/* Display the selected variant */}
                         {answers[question.id] && (
                             <p style={selectedAnswerStyles}><strong>You selected:</strong> {answers[question.id]}</p>
                         )}
                     </div>
+
                 ))
             ) : (
                 <p>Loading questions...</p>
             )}
-
+            <div style={{ margin: '20px 0' }}>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={isSatisfied}
+                        onChange={(e) => setIsSatisfied(e.target.checked)}
+                        style={{ marginRight: '10px' }}
+                    />
+                    I am satisfied with the lesson
+                </label>
+            </div>
             <button style={submitButtonStyles} onClick={handleSubmitAnswers}>Submit Answers</button>
             {message && <p style={messageStyles}>{message}</p>}
             <button style={backButtonStyles} onClick={() => navigate(-1)}>Back</button>
